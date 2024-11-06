@@ -1,0 +1,42 @@
+{
+   "system":{
+      "config": {
+         "hostname": "MyHostname"
+      }
+   },
+   "acl": {
+      "acl-sets": {
+         "acl-set": [
+            {
+               "config": {
+                  "name": "test",
+                  "type": "ACL_IPV4"
+               },
+               "name": "test",
+               "type": "ACL_IPV4",
+               "acl-entries": {
+                  "acl-entry": [
+                     {
+                        "sequence-id": 10,
+                        "actions": {
+                           "config": {
+                              "forwarding-action": "DROP"
+                           }
+                        },
+                        "config": {
+                           "sequence-id": 10
+                        },
+                        "ipv4": {
+                           "config": {
+                              "destination-address": "192.0.2.1/32",
+                              "source-address": "0.0.0.0/0"
+                           }
+                        }
+                     }
+                  ]
+               }
+            }
+         ]
+      }
+   }
+}

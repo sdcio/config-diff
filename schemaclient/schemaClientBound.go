@@ -17,20 +17,20 @@ package schemaclient
 import (
 	"context"
 
-	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
-	"github.com/sdcio/schema-server/pkg/store"
 	schemaClient "github.com/sdcio/data-server/pkg/datastore/clients/schema"
+	"github.com/sdcio/schema-server/pkg/store"
+	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
 )
 
 type SchemaClientBoundImpl struct {
 	schemastore store.Store
-	schemaRef *sdcpb.Schema
+	schemaRef   *sdcpb.Schema
 }
 
 func NewMemSchemaClientBound(schemastore store.Store, schemaRef *sdcpb.Schema) schemaClient.SchemaClientBound {
 	return &SchemaClientBoundImpl{
 		schemastore: schemastore,
-		schemaRef: schemaRef,
+		schemaRef:   schemaRef,
 	}
 }
 
