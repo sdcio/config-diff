@@ -1,0 +1,51 @@
+apiVersion: inv.sdcio.dev/v1alpha1
+kind: Schema
+metadata:
+  name: eos.arista.4.33.0.f
+  namespace: default
+spec:
+  provider: eos.arista.sdcio.dev
+  version: 4.33.0.F
+  repositories:
+  - repoURL: https://github.com/aristanetworks/yang
+    kind: branch
+    ref: master
+    dirs:
+    - src: EOS-4.33.0F
+      dst: .
+    - src: EOS-4.27.2F/openconfig/hercules
+      dst: hercules
+    schema:
+      models:
+        - release/openconfig/models
+      includes:
+        - openconfig/public/release/models
+        # - experimental
+        - ietf
+        # - hercules
+        # - ocrepomodels
+      excludes:
+        - arista-bfd-notsupported-deviations.yang
+        - arista-defined-sets-notsupported-deviations.yang
+        - arista-interfaces-notsupported-deviations.yang
+        - arista-keychain-notsupported-deviations.yang
+        - arista-lacp-notsupported-deviations.yang
+        - arista-lldp-notsupported-deviations.yang
+        - arista-macsec-notsupported-deviations.yang
+        - arista-network-instance-notsupported-deviations.yang
+        - arista-platform-notsupported-deviations.yang
+        - arista-qos-notsupported-deviations.yang
+        - arista-sampling-notsupported-deviations.yang
+        - arista-spanning-tree-notsupported-deviations.yang
+        - arista-system-notsupported-deviations.yang
+        - arista-telemetry-notsupported-deviations.yang
+        - arista-terminal-device-notsupported-deviations.yang
+  - repoURL: https://github.com/openconfig/public
+    kind: branch
+    ref: master
+    dirs:
+      - src: third_party/ietf
+        dst: ietf
+      - src: release/models
+        dst: ocrepomodels
+    
