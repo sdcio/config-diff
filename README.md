@@ -4,8 +4,6 @@
 
 ```
 # ./config-diff <schema-definition> <output-format> <concurrent-validation> <onlyNewOrUpdated>
-
-
 ```
 - __\<schema-definition>__: Path of the schema-definition *.yaml file
 - __\<output-format>__: Format of the output. (json, json_ietf, xml)
@@ -15,5 +13,4 @@
 Example:
 ```
 ./config-diff "/home/mava/projects/config-diff/data/schema/arista-4.33.0.F.yaml" xml true true
-
 ```
