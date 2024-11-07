@@ -15,7 +15,8 @@ import (
 
 	"github.com/sdcio/data-server/pkg/tree"
 	treejson "github.com/sdcio/data-server/pkg/tree/importer/json"
-	"github.com/sdcio/schema-server/pkg/store/memstore"
+	"github.com/sdcio/schema-server/pkg/config"
+	"github.com/sdcio/schema-server/pkg/store/persiststore"
 	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
 )
 
@@ -27,7 +28,10 @@ func main() {
 		panic("cannot execute need config and base dir")
 	}
 
-	schemastore := memstore.New()
+	schemastore, err := persiststore.New(ctx, "foo", &config.SchemaPersistStoreCacheConfig{})
+	if err != nil {
+		panic(err)
+	}
 	schemaLoader, err := schemaloader.New(schemastore)
 	if err != nil {
 		panic(err)
@@ -47,8 +51,10 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(root.String())
-
-	jsonBytes, err := os.ReadFile("data/config/running/running_srl_01.json")
+	//
+	// Load running
+	//
+	jsonBytes, err := os.ReadFile("data/config/running/running_eos_01.json")
 	if err != nil {
 		panic(err)
 	}
@@ -67,6 +73,9 @@ func main() {
 	root.FinishInsertionPhase()
 	fmt.Println(root.String())
 
+	//
+	// Here we load the indent that is supposed to go on top of the running
+	//
 	jsonBytes, err = os.ReadFile("data/config/additions/srl_01.json")
 	if err != nil {
 		panic(err)
@@ -83,6 +92,10 @@ func main() {
 	}
 
 	root.FinishInsertionPhase()
+
+	//
+	// Prepare the output
+	//
 
 	output := args[2]
 	onlyNewOrUpdated, err := strconv.ParseBool(args[4])
@@ -130,7 +143,9 @@ func main() {
 		panic(err)
 	}
 
+	//
 	// perform validation
+	//
 	// we use a channel and cumulate all the errors
 	validationErrors := []error{}
 	validationErrChan := make(chan error)
