@@ -34,7 +34,7 @@ type SchemaLoader struct {
 }
 
 func (r *SchemaLoader) LoadSchema(ctx context.Context, schemaConfigPath string) (*sdcpb.CreateSchemaResponse, error) {
-	schemacr, err := getConfig(schemaConfigPath)
+	schemacr, err := GetConfig(schemaConfigPath)
 	if err != nil {
 		return nil, err
 	}

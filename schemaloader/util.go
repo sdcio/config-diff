@@ -7,7 +7,7 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-func getConfig(schemaConfigPath string) (*invv1alpha1.Schema, error) {
+func GetConfig(schemaConfigPath string) (*invv1alpha1.Schema, error) {
 	b, err := os.ReadFile(schemaConfigPath)
 	if err != nil {
 		panic(err)

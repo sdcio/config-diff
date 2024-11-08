@@ -48,4 +48,3 @@ spec:
         dst: ietf
       - src: release/models
         dst: ocrepomodels
-    

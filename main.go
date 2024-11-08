@@ -32,17 +32,31 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	schemaLoader, err := schemaloader.New(schemastore)
+
+	schemacr, err := schemaloader.GetConfig(args[1])
 	if err != nil {
 		panic(err)
 	}
-	rsp, err := schemaLoader.LoadSchema(ctx, args[1])
+
+	_, err = schemastore.GetSchemaDetails(ctx, &sdcpb.GetSchemaDetailsRequest{
+		Schema: &sdcpb.Schema{
+			Vendor:  schemacr.Spec.Provider,
+			Version: schemacr.Spec.Version,
+		},
+	})
 	if err != nil {
-		panic(err)
+		schemaLoader, err := schemaloader.New(schemastore)
+		if err != nil {
+			panic(err)
+		}
+		_, err = schemaLoader.LoadSchema(ctx, args[1])
+		if err != nil {
+			panic(err)
+		}
 	}
 	scb := schemaclient.NewMemSchemaClientBound(schemastore, &sdcpb.Schema{
-		Vendor:  rsp.Schema.Vendor,
-		Version: rsp.Schema.Version,
+		Vendor:  schemacr.Spec.Provider,
+		Version: schemacr.Spec.Version,
 	})
 
 	tc := tree.NewTreeContext(tree.NewTreeSchemaCacheClient("dev1", nil, scb), "test")
@@ -54,7 +68,7 @@ func main() {
 	//
 	// Load running
 	//
-	jsonBytes, err := os.ReadFile("data/config/running/running_eos_01.json")
+	jsonBytes, err := os.ReadFile("data/config/running/running_eos_02.json")
 	if err != nil {
 		panic(err)
 	}
@@ -73,25 +87,25 @@ func main() {
 	root.FinishInsertionPhase()
 	fmt.Println(root.String())
 
-	//
-	// Here we load the indent that is supposed to go on top of the running
-	//
-	jsonBytes, err = os.ReadFile("data/config/additions/srl_01.json")
-	if err != nil {
-		panic(err)
-	}
+	// //
+	// // Here we load the indent that is supposed to go on top of the running
+	// //
+	// jsonBytes, err = os.ReadFile("data/config/additions/srl_01.json")
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	err = json.Unmarshal(jsonBytes, &j)
-	if err != nil {
-		panic(err)
-	}
-	jti = treejson.NewJsonTreeImporter(j)
-	err = root.ImportConfig(ctx, jti, "one", 20)
-	if err != nil {
-		panic(err)
-	}
+	// err = json.Unmarshal(jsonBytes, &j)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// jti = treejson.NewJsonTreeImporter(j)
+	// err = root.ImportConfig(ctx, jti, "one", 20)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	root.FinishInsertionPhase()
+	// root.FinishInsertionPhase()
 
 	//
 	// Prepare the output
