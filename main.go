@@ -45,7 +45,7 @@ func main() {
 		},
 	})
 	if err != nil {
-		schemaLoader, err := schemaloader.New(schemastore)
+		schemaLoader, err := schemaloader.New(schemastore, &schemaloader.Config{TmpPath: "tmp/tmp", SchemasPath: "tmp/schemas"})
 		if err != nil {
 			panic(err)
 		}

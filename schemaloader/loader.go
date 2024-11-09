@@ -11,26 +11,28 @@ import (
 	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
 )
 
-const (
-	tmpPath     = "tmp/tmp"
-	schemasPath = "tmp/schemas"
-)
+type Config struct {
+	TmpPath string
+	SchemasPath string
+}
 
-func New(schemastore store.Store) (*SchemaLoader, error) {
-	if err := os.MkdirAll(tmpPath, 0755|os.ModeDir); err != nil {
+func New(schemastore store.Store, cfg *Config) (*SchemaLoader, error) {
+	if err := os.MkdirAll(cfg.TmpPath, 0755|os.ModeDir); err != nil {
 		return nil, err
 	}
-	if err := os.MkdirAll(schemasPath, 0755|os.ModeDir); err != nil {
+	if err := os.MkdirAll(cfg.SchemasPath, 0755|os.ModeDir); err != nil {
 		return nil, err
 	}
 
 	return &SchemaLoader{
 		schemastore: schemastore,
+		cfg: cfg,
 	}, nil
 }
 
 type SchemaLoader struct {
 	schemastore store.Store
+	cfg *Config
 }
 
 func (r *SchemaLoader) LoadSchema(ctx context.Context, schemaConfigPath string) (*sdcpb.CreateSchemaResponse, error) {
@@ -40,8 +42,8 @@ func (r *SchemaLoader) LoadSchema(ctx context.Context, schemaConfigPath string) 
 	}
 
 	schemaLoader, err := loader.NewLoader(
-		filepath.Join(tmpPath),
-		filepath.Join(schemasPath),
+		filepath.Join(r.cfg.TmpPath),
+		filepath.Join(r.cfg.SchemasPath),
 		NewNopResolver(),
 	)
 	if err != nil {
@@ -66,8 +68,8 @@ func (r *SchemaLoader) LoadSchema(ctx context.Context, schemaConfigPath string) 
 			Vendor:  schemacr.Spec.Provider,
 			Version: schemacr.Spec.Version,
 		},
-		File:      schemacr.Spec.GetNewSchemaBase(schemasPath).Models,
-		Directory: schemacr.Spec.GetNewSchemaBase(schemasPath).Includes,
-		Exclude:   schemacr.Spec.GetNewSchemaBase(schemasPath).Excludes,
+		File:      schemacr.Spec.GetNewSchemaBase(r.cfg.SchemasPath).Models,
+		Directory: schemacr.Spec.GetNewSchemaBase(r.cfg.SchemasPath).Includes,
+		Exclude:   schemacr.Spec.GetNewSchemaBase(r.cfg.SchemasPath).Excludes,
 	})
 }
