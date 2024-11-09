@@ -49,7 +49,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		_, err = schemaLoader.LoadSchema(ctx, args[1])
+		_, err = schemaLoader.LoadSchema(ctx, schemacr)
 		if err != nil {
 			panic(err)
 		}

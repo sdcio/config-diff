@@ -6,13 +6,14 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/sdcio/config-server/apis/inv/v1alpha1"
 	loader "github.com/sdcio/config-server/pkg/schema"
 	"github.com/sdcio/schema-server/pkg/store"
 	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
 )
 
 type Config struct {
-	TmpPath string
+	TmpPath     string
 	SchemasPath string
 }
 
@@ -26,21 +27,16 @@ func New(schemastore store.Store, cfg *Config) (*SchemaLoader, error) {
 
 	return &SchemaLoader{
 		schemastore: schemastore,
-		cfg: cfg,
+		cfg:         cfg,
 	}, nil
 }
 
 type SchemaLoader struct {
 	schemastore store.Store
-	cfg *Config
+	cfg         *Config
 }
 
-func (r *SchemaLoader) LoadSchema(ctx context.Context, schemaConfigPath string) (*sdcpb.CreateSchemaResponse, error) {
-	schemacr, err := GetConfig(schemaConfigPath)
-	if err != nil {
-		return nil, err
-	}
-
+func (r *SchemaLoader) LoadSchema(ctx context.Context, schemacr *v1alpha1.Schema) (*sdcpb.CreateSchemaResponse, error) {
 	schemaLoader, err := loader.NewLoader(
 		filepath.Join(r.cfg.TmpPath),
 		filepath.Join(r.cfg.SchemasPath),
