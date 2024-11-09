@@ -35,3 +35,4 @@ kubeconfig
 tls.crt
 tls.key
 tmp
+foo

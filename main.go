@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/henderiw/config-diff/schemaclient"
-	"github.com/henderiw/config-diff/schemaloader"
+	"github.com/sdcio/config-diff/schemaclient"
+	"github.com/sdcio/config-diff/schemaloader"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/sdcio/data-server/pkg/tree"

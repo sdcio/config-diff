@@ -1,4 +1,4 @@
-module github.com/henderiw/config-diff
+module github.com/sdcio/config-diff
 
 go 1.23.0
 
