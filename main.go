@@ -64,11 +64,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(root.String())
+	// fmt.Println(root.String())
+
 	//
 	// Load running
 	//
-	jsonBytes, err := os.ReadFile("data/config/running/running_eos_02.json")
+	jsonBytes, err := os.ReadFile("/home/mava/projects/config-diff/data/config/running/running_eos_02.json")
 	if err != nil {
 		panic(err)
 	}
@@ -125,7 +126,7 @@ func main() {
 	fmt.Printf("\n%s IN %q FORMAT:\n\n", title, strings.ToUpper(output))
 	switch output {
 	case "xml":
-		x, err := root.ToXML(onlyNewOrUpdated, true, true, false)
+		x, err := root.ToXML(onlyNewOrUpdated, true, true, false, true)
 		if err != nil {
 			panic(err)
 		}
@@ -137,9 +138,9 @@ func main() {
 		fmt.Println(s)
 	case "json", "json_ietf":
 		if output == "json" {
-			j, err = root.ToJson(onlyNewOrUpdated)
+			j, err = root.ToJson(onlyNewOrUpdated, true)
 		} else {
-			j, err = root.ToJsonIETF(onlyNewOrUpdated)
+			j, err = root.ToJsonIETF(onlyNewOrUpdated, true)
 		}
 		if err != nil {
 			panic(err)
