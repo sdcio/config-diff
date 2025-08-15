@@ -22,7 +22,7 @@ require (
 	github.com/spf13/pflag v1.0.6
 	golang.org/x/term v0.32.0
 	google.golang.org/protobuf v1.36.6
-	k8s.io/apimachinery v0.33.1
+	k8s.io/apimachinery v0.33.3
 	sigs.k8s.io/yaml v1.4.0
 )
 
