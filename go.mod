@@ -19,7 +19,7 @@ require (
 	github.com/sdcio/sdc-protos v0.0.44
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.7
 	golang.org/x/term v0.32.0
 	google.golang.org/protobuf v1.36.6
 	k8s.io/apimachinery v0.33.3
