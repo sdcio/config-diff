@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sdcio/config-diff/pkg/configdiff"
 	"github.com/sdcio/config-diff/pkg/configdiff/config"
+	"github.com/sdcio/config-diff/pkg/types"
 	"github.com/spf13/cobra"
 )
 
@@ -37,10 +37,13 @@ var SchemaListCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Println("Available Schemas:")
-		for _, s := range schemas {
-			fmt.Printf("Vendor: %s, Version: %s\n", s.GetVendor(), s.GetVersion())
+		outputSchemas := types.NewSchemaOutputList(schemas)
+
+		err = WriteOutput(outputSchemas)
+		if err != nil {
+			return err
 		}
+
 		return nil
 
 	},

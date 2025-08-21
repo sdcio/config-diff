@@ -41,10 +41,10 @@ var targetListCmd = &cobra.Command{
 			fmt.Println("no targets found")
 			return nil
 		}
-		if detailed {
-			fmt.Print(targets.StringDetail())
-		} else {
-			fmt.Print(targets.String())
+
+		err = WriteOutput(targets.Export())
+		if err != nil {
+			return err
 		}
 		return nil
 	},

@@ -10,6 +10,7 @@ import (
 )
 
 var optsP = config.ConfigPersistentOpts{}
+var jsonOutput bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -79,4 +80,8 @@ func EnableFlagAndDisableFileCompletion(cmd *cobra.Command) {
 
 		return completions, cobra.ShellCompDirectiveNoFileComp
 	}
+}
+
+func init() {
+	rootCmd.PersistentFlags().BoolVarP(&jsonOutput, "json", "j", false, "Return output in JSON instead of text")
 }

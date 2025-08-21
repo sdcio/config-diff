@@ -57,20 +57,26 @@ go install github.com/sdcio/config-diff@latest
 After installation, you can enable completions for your shell:
 
 **Bash**
-    config-diff completion bash > ~/.bash_completion.d/config-diff
-    echo "source ~/.bash_completion.d/config-diff" >> ~/.bashrc
-    source ~/.bashrc
+```
+config-diff completion bash > ~/.bash_completion.d/config-diff
+echo "source ~/.bash_completion.d/config-diff" >> ~/.bashrc
+source ~/.bashrc
+```
 
 **Zsh**
-    mkdir -p ~/.zsh/completions
-    config-diff completion zsh > ~/.zsh/completions/_config-diff
-    echo "fpath=(~/.zsh/completions $fpath)" >> ~/.zshrc
-    autoload -Uz compinit && compinit
-    source ~/.zshrc
+```
+mkdir -p ~/.zsh/completions
+config-diff completion zsh > ~/.zsh/completions/_config-diff
+echo "fpath=(~/.zsh/completions $fpath)" >> ~/.zshrc
+autoload -Uz compinit && compinit
+source ~/.zshrc
+```
 
 **Fish**
-    mkdir -p ~/.config/fish/completions
-    config-diff completion fish > ~/.config/fish/completions/config-diff.fish
+```
+mkdir -p ~/.config/fish/completions
+config-diff completion fish > ~/.config/fish/completions/config-diff.fish
+```
 
 Tip: If you use the provided `install.sh` script, completions are installed automatically for Bash, Zsh, and Fish.
 

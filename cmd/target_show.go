@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sdcio/config-diff/pkg/configdiff"
 	"github.com/sdcio/config-diff/pkg/configdiff/config"
@@ -36,7 +35,12 @@ var targetShowCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Print(target.StringDetail())
+		// enable detailed output
+		detailed = true
+		err = WriteOutput(target.Export())
+		if err != nil {
+			return err
+		}
 		return nil
 	},
 }

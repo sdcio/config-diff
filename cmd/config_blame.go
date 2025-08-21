@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sdcio/config-diff/pkg/configdiff"
 	"github.com/sdcio/config-diff/pkg/configdiff/config"
+	"github.com/sdcio/config-diff/pkg/types"
 	sdcpb "github.com/sdcio/sdc-protos/sdcpb"
 	"github.com/spf13/cobra"
 )
@@ -46,8 +46,9 @@ var configBlameCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Target: %s\n", targetName)
-		fmt.Println(blameresult.ToString())
+
+		bro := types.NewBlameResultOutput(blameresult)
+		WriteOutput(bro)
 
 		return nil
 	},
